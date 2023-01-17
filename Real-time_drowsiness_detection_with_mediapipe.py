@@ -142,7 +142,8 @@ while True:
                 #eyes
 
                 message = 'Hey driver, it Seems you are sleeping, please wake up wake up wake up'
-                t = threading.Thread(target=run_speech, args=(speech, message)) #create new instance if thread is dead
+                t = threading.Thread(target=run_speech, args=(speech, message))
+                #creating new instance if the thread is dead
                 t.start()
 
 
@@ -156,7 +157,8 @@ while True:
                 #mouth
 
                 message = 'Hey driver, you are looking tired, please take rest take rest take rest'
-                p = threading.Thread(target=run_speech, args=(speech, message)) #create new instance if thread is dead
+                p = threading.Thread(target=run_speech, args=(speech, message))
+                #creating new instance if the thread is dead
                 p.start()
 
 
