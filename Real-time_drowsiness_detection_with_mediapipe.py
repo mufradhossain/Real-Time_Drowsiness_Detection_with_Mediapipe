@@ -72,38 +72,48 @@ COLOR_RED = (0,0,255)
 COLOR_BLUE = (255,0,0)
 COLOR_GREEN = (0,255,0)
 
+
+### For tracking lips, using these specific landmarks.
 LIPS=[ 61, 146, 91, 181, 84, 17, 314, 405, 321, 375,291, 308, 324, 318, 402, 317, 14, 87, 178, 88, 95,
        185, 40, 39, 37,0 ,267 ,269 ,270 ,409, 415, 310, 311, 312, 13, 82, 81, 42, 183, 78 ]
 
+### For tracking right eye, using these specific landmarks.
 RIGHT_EYE = [ 33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161 , 246 ]
+### For tracking left eye, using these specific landmarks.
 LEFT_EYE = [ 362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385,384, 398 ]
 
-
+### For tracking left eye top bottom position, using these specific landmarks.
 LEFT_EYE_TOP_BOTTOM = [386, 374]
+### For tracking left eye left right position, using these specific landmarks.
 LEFT_EYE_LEFT_RIGHT = [263, 362]
 
+### For tracking right eye top bottom position, using these specific landmarks.
 RIGHT_EYE_TOP_BOTTOM = [159, 145]
+### For tracking right eye left right position, using these specific landmarks.
 RIGHT_EYE_LEFT_RIGHT = [133, 33]
 
 UPPER_LOWER_LIPS = [13, 14]
 LEFT_RIGHT_LIPS = [78, 308]
 
-
+### For tracking face, using these specific landmarks.
 FACE=[ 10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378, 400,
        377, 152, 148, 176, 149, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21, 54, 103,67, 109]
 
+### generating the face model here
 face_model = face_mesh.FaceMesh(static_image_mode=STATIC_IMAGE,
                                 max_num_faces= MAX_NO_FACES,
                                 min_detection_confidence=DETECTION_CONFIDENCE,
                                 min_tracking_confidence=TRACKING_CONFIDENCE)
 
+### capturing input starts from here
+capture = cv.VideoCapture(0) ### taking input from webcam
 
-capture = cv.VideoCapture(0)
-
+### frame counts
 frame_count = 0
 min_frame = 6
 min_tolerance = 5.0
 
+### using pyttsx3 for speech text to speech output
 speech = pyttsx3.init()
 
 
@@ -112,7 +122,7 @@ while True:
     result, image = capture.read()
 
     if result:
-        image_rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+        image_rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB) ### converting BGR to RGB
         outputs = face_model.process(image_rgb)
 
         if outputs.multi_face_landmarks:
@@ -139,11 +149,11 @@ while True:
                 frame_count = 0
 
             if frame_count > min_frame:
-                #eyes
+                #### doing eye ratio analysis here
 
                 message = 'Hey driver, it Seems you are sleeping, please wake up wake up wake up'
                 t = threading.Thread(target=run_speech, args=(speech, message))
-                #creating new instance if the thread is dead
+                #### here, i'm creating new instance if the thread is dead
                 t.start()
 
 
@@ -154,11 +164,11 @@ while True:
 
             ratio_lips =  get_aspect_ratio(image, outputs, UPPER_LOWER_LIPS, LEFT_RIGHT_LIPS)
             if ratio_lips < 1.8:
-                #mouth
+                #### doing mouth ratio analysis here
 
                 message = 'Hey driver, you are looking tired, please take rest take rest take rest'
                 p = threading.Thread(target=run_speech, args=(speech, message))
-                #creating new instance if the thread is dead
+                #### here, i'm creating new instance if the thread is dead
                 p.start()
 
 
