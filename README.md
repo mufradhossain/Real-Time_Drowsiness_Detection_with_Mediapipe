@@ -2,5 +2,4 @@
 
 ## Credits:
 
-MediaPipe
-Steve San
+MediaPipe, Steve San
