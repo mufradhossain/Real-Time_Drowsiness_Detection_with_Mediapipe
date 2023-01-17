@@ -19,7 +19,7 @@ def run_speech(speech, speech_message):
     speech.runAndWait()
 
 
-def draw_landmarks(image, outputs, land_mark, color):
+def draw_landmarks(image, outputs, land_mark, color): ## This function draws facial landmarks
     height, width =image.shape[:2]
 
     for face in land_mark:
@@ -29,7 +29,7 @@ def draw_landmarks(image, outputs, land_mark, color):
 
         cv.circle(image, point_scale, 2, color, 1)
 
-def euclidean_distance(image, top, bottom):
+def euclidean_distance(image, top, bottom): ## This function calculates euclidean distance of the specific points or landmarks
     height, width = image.shape[0:2]
 
     point1 = int(top.x * width), int(top.y * height)
@@ -39,7 +39,7 @@ def euclidean_distance(image, top, bottom):
     return distance
 
 
-def get_aspect_ratio(image, outputs, top_bottom, left_right):
+def get_aspect_ratio(image, outputs, top_bottom, left_right): ## This function calculates aspect ratio
     landmark = outputs.multi_face_landmarks[0]
 
     top = landmark.landmark[top_bottom[0]]
