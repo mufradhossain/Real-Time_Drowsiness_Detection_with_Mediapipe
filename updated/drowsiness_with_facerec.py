@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Author: Bondstein ML Team
-Email: anmsajedulalam@gmail.com
-Goal: Drowsiness Detection Using Facial Landmarks
+Email: 
+Goal: 
 """
 
 import mediapipe as mp
